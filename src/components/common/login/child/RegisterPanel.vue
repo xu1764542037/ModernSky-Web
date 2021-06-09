@@ -86,7 +86,7 @@ export default {
 #register-Panel {
   position: absolute;
   margin-left: 34.3%;
-  margin-top: 1.5%;
+  margin-top: 2%;
   border-radius: 10px;
   height: 700px;
   width: 601px;

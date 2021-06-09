@@ -3,10 +3,10 @@
     <h1 id="login-Title">Login</h1>
     <div id="login-Input">
       <div>
-         <input id="login-account-input" type="text" placeholder="account"/>
+         <input id="login-account-input" type="text" placeholder="account" v-model="account"/>
       </div>
       <div>
-        <input id="login-password-input" type="password" placeholder="password"/>
+        <input id="login-password-input" type="password" placeholder="password" v-model="password"/>
       </div>
     </div>
     <div id="login-Button-Box">
@@ -17,7 +17,13 @@
 
 <script>
 export default {
-  name: "LoginPanel"
+  name: "LoginPanel",
+  data() {
+    return {
+      account: null,
+      password: null,
+    }
+  }
 }
 </script>
 
@@ -28,7 +34,7 @@ export default {
 #login-Panel {
   position: absolute;
   margin-left: 34.3%;
-  margin-top: 1.5%;
+  margin-top: 2%;
   border-radius: 10px;
   height: 700px;
   width: 601px;
