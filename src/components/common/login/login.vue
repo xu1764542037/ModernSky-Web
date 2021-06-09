@@ -41,7 +41,7 @@ export default {
       loginPanelShow: false,
       RegisterPanelShow: true,
       EditPasswordPanelShow: false,
-      isPullUp: true
+      isPullUp: false
     }
   },
   methods: {
