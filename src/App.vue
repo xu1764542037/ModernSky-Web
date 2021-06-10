@@ -1,14 +1,21 @@
 <template>
   <div id="app">
+    <login></login>
+    <index></index>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import login from "@/components/common/login/login";
+import index from "@/components/common/index/Index"
+
 
 export default {
   name: 'App',
   components: {
+    login,
+    index
   }
 }
 </script>
@@ -31,7 +38,7 @@ body{
 
 
 input{
-  padding-left: 8px;
+  padding-left: 5px;
 }
 
 /**

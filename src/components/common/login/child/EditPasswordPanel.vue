@@ -1,25 +1,29 @@
 <template>
   <div id="edit-Password-Panel">
-    <h1 id="edit-Title">Edit</h1>
+    <h1 id="edit-Title">重置密码</h1>
     <div id="edit-Input">
-      <div>
-        <input id="edit-password-input" type="text" placeholder="password" v-model="password"/>
+      <div id="edit-Input-password">
+        密<span class="nbsp" v-html="'&nbsp;&nbsp;&nbsp;&nbsp;'"/>码
+        <input id="edit-password-input" type="text" placeholder="在此输入密码" v-model="password"/>
       </div>
-      <div>
-        <input id="edit-password-repeat-input" type="text" placeholder="again" v-model="password"/>
+      <div id="edit-Input-password-repeat">
+        请确认
+        <input id="edit-password-repeat-input" type="text" placeholder="确认密码" v-model="password"/>
       </div>
-      <div>
-        <input id="edit-email-input" type="email" @click="showEmailCodeBtn" placeholder="email" v-model="email"/>
+      <div id="edit-Input-email">
+        邮<span class="nbsp" v-html="'&nbsp;&nbsp;&nbsp;&nbsp;'"/>箱
+        <input id="edit-email-input" type="email" placeholder="在此输入邮箱" v-model="email"/>
       </div>
       <transition name="el-zoom-in-top">
-        <div v-show="emailCodeBtn">
-          <input id="edit-email-code-input" type="text" maxlength="6" placeholder="Email Code" v-model="emailCode"></input>
+        <div id="edit-Input-email-code">
+          验证码
+          <input id="edit-email-code-input" type="text" maxlength="6" placeholder="验证码" v-model="emailCode"></input>
           <button id="edit-send-email" @click="countDown" :disabled="emailCodeBtnDisable">{{codeCount}}</button>
         </div>
       </transition>
     </div>
     <div id="edit-Button-Box">
-      <button id="edit-button" @click="register">Edit</button>
+      <button id="edit-button" @click="register">修改</button>
     </div>
   </div>
 </template>
@@ -32,20 +36,17 @@ export default {
   data() {
     return {
       emailCodeBtn: false,
-      emailCodeBtnDisable: false,
-      codeCount: "SEND",
+      codeCount: "发送",
       account: null,
       password: null,
       email: null,
       emailCode: null,
-      responseEmailCode: null
+      responseEmailCode: null,
+      emailCodeBtnDisable: false
     }
   },
 
   methods: {
-    showEmailCodeBtn() {
-      this.emailCodeBtn = true
-    },
     countDown() {
       if (this.email === "" || this.email === null) {
         alert("请填写邮箱");
@@ -74,7 +75,6 @@ export default {
       }else {
         alert("注册成功")
         this.emailCodeBtn = false
-
       }
     }
   }
@@ -84,56 +84,70 @@ export default {
 <style scoped>
 #edit-Password-Panel {
   position: absolute;
-  margin-left: 37%;
-  margin-top: 3%;
+  margin-top: -400px;
+  top: 50%;
+  right: 139px;
   border-radius: 10px;
-  height: 700px;
-  width: 501px;
+  width: 480px;
+  height: 680px;
   background: rgba(255,255,255,.7);
-  text-align: center;
+  /*text-align: center;*/
   -webkit-transition: .5s all;
 }
 
 #edit-Title {
-  font-size: 48px;
-  position: relative;
-  top: 10%;
+  font-size: 36px;
+  margin: 50px 0 22px 39px;
+}
+
+#edit-Input {
+  font-size: 16px;
+  color: #585A58;
 }
 
 #edit-Input input{
-  height: 30px;
-  background: rgba(255,255,255,0);
+  background: rgba(255, 255, 255, .7);
+  height: 35px;
+  border: 1px #BDC2CC solid;
+  border-radius: 5px;
+  margin-left: 10px;
+  -webkit-transition: .5s all;
   outline: none;
-  border: 0;
-  border-bottom: 3px darkgrey solid;
-  font-size: 16px;
+}
+
+#edit-Input input:hover {
+  border: 1.5px #2E58FF solid;
+}
+
+#edit-Input-password,#edit-Input-password-repeat,#edit-Input-email,#edit-Input-email-code {
+  margin-left: 30px;
 }
 
 #edit-password-input {
-  width: 350px;
   position: relative;
-  margin-top: 150px;
+  margin-top: 50px;
+  width: 337px;
 }
 
 #edit-password-repeat-input {
-  width: 350px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 337px;
 }
 
 #edit-email-input {
-  width: 350px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 337px;
 }
 
 #edit-email-code-input {
-  width: 100px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 150px;
 }
 
 #edit-send-email {
-  width: 150px;
+  width: 140px;
   height: 40px;
-  margin-left: 100px;
+  margin-left: 50px;
   border: 0;
   border-radius: 5px;
   outline: none;
@@ -146,28 +160,29 @@ export default {
   background: #A8CAF4;
 }
 
-#edit-Button-Box {
-  position: relative;
-  margin-top: 97px;
+#edit-Input-email-code,#edit-Input-password-repeat {
+  letter-spacing: 1px;
 }
 
 #edit-button {
-  width: 360px;
-  height: 40px;
+  position: absolute;
+  width: 390px;
+  height: 50px;
+  border-radius: 25px;
   border: 0;
-  border-radius: 5px;
+  background: #BDCEFC;
+  color: #fefefe;
+  font-size: 18px;
   outline: none;
-  background: linear-gradient(45deg, #fff1eb, #ace0f9);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
   -webkit-transition: .5s all;
-  cursor: pointer;
+  /*margin-top: 50px;*/
+  bottom: 100px;
+  margin-left: 45px;
 }
 
 #edit-button:hover {
-  border: 1px #CCCCFF solid;
-  background: linear-gradient(45deg,#e9defa,#fbfcdb);
+  background: #3f89ec;
+
 }
 
 

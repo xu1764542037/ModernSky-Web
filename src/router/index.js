@@ -2,6 +2,13 @@ import Vue from "vue";
 import VueRouter from 'vue-router'
 
 const Login =() => import("@/components/common/login/login")
+const Index =() => import("@/components/common/index/Index")
+
+const Home =() => import("@/views/home/Home")
+const Dynamic =() => import("@/views/dynamic/Dynamic")
+const Communication =() => import("@/views/communication/Communication")
+const Forum =() => import("@/views/forum/Forum")
+
 
 //1.安装插件
 Vue.use(VueRouter)
@@ -10,11 +17,32 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '',
-    redirect: '/login'
+    redirect: '/index'
   },
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/index',
+    redirect: "/home",
+    component: Index
+  },
+  {
+    path: "/home",
+    component: Home
+  },
+  {
+    path: '/forum',
+    component: Forum
+  },
+  {
+    path: '/communication',
+    component: Communication
+  },
+  {
+    path: '/dynamic',
+    component: Dynamic
   }
 ]
 

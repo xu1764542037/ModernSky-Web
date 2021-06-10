@@ -1,26 +1,41 @@
 <template>
   <div id="register-Panel">
-    <h1 id="register-Title">Register</h1>
+    <h1 id="register-Title">欢迎注册</h1>
+    <span id="register-have-account">已有账号？
+    <span id="register-go-login" @click="goLogin">登录</span></span>
     <div id="register-Input">
-      <div>
-        <input id="register-account-input" type="text" placeholder="account" v-model="account"/>
+      <div id="register-Input-account">
+        账<span class="nbsp" v-html="'&nbsp;&nbsp;&nbsp;&nbsp;'"/>号
+        <input id="register-account-input" type="text" placeholder="请在此输入账号" v-model="account"/>
       </div>
-      <div>
-        <input id="register-password-input" type="text" placeholder="password" v-model="password"/>
+      <div id="register-Input-password">
+        密<span class="nbsp" v-html="'&nbsp;&nbsp;&nbsp;&nbsp;'"/>码
+        <input id="register-password-input" type="text" placeholder="请在此输入密码" v-model="password"/>
       </div>
-      <div>
-        <input id="register-email-input" type="email" @click="showEmailCodeBtn" placeholder="email" v-model="email"/>
+      <div id="register-Input-email">
+        邮<span class="nbsp" v-html="'&nbsp;&nbsp;&nbsp;&nbsp;'"/>箱
+        <input id="register-email-input" type="email" placeholder="请在此输入邮箱" v-model="email"/>
       </div>
       <transition name="el-zoom-in-top">
-        <div v-show="emailCodeBtn">
-          <input id="register-email-code-input" type="text" maxlength="6" placeholder="Email Code" v-model="emailCode"></input>
+        <div id="register-Input-email-code">
+          验证码
+          <input id="register-email-code-input" type="text" maxlength="6" placeholder="邮箱验证码" v-model="emailCode"></input>
           <button id="register-send-email" @click="countDown" :disabled="emailCodeBtnDisable">{{codeCount}}</button>
         </div>
       </transition>
     </div>
     <div id="register-Button-Box">
-      <button id="register-button" @click="Register">REGISTER</button>
+      <button id="register-button" @click="Register">注册</button>
     </div>
+    <div id="register-lastChoice">
+      <input type="checkbox" id="register-respectCheck"  @click="isChecked($event)">
+      <span id="register-respect">
+        阅读并接受<span id="register-agreement">《用户协议》</span>
+          及
+        <span id="register-statement">《隐私权保护声明》</span>
+      </span>
+    </div>
+
   </div>
 
 </template>
@@ -35,20 +50,18 @@ export default {
   name: "RegisterPanel",
   data() {
     return {
-      emailCodeBtn: false,
       emailCodeBtnDisable: false,
-      codeCount: "SEND",
+      codeCount: "发送",
       account: null,
       password: null,
       email: null,
       emailCode: null,
-      responseEmailCode: null
+      responseEmailCode: null,
+      isCheck: true,
+      dis: true
     }
   },
   methods: {
-    showEmailCodeBtn() {
-      this.emailCodeBtn = true
-    },
     countDown() {
       if (this.email === "" || this.email === null) {
         alert("请填写邮箱");
@@ -103,6 +116,13 @@ export default {
           alert("系统错误，请联系管理员")
         })
       }
+    },
+    goLogin() {
+      this.$emit("changeLogin")
+    },
+    isChecked(e) {
+      this.dis = e.target.checked
+      console.log(this.dis);
     }
   }
 }
@@ -111,56 +131,85 @@ export default {
 <style scoped>
 #register-Panel {
   position: absolute;
-  margin-left: 37%;
-  margin-top: 3%;
+  margin-top: -400px;
+  top: 50%;
+  right: 139px;
   border-radius: 10px;
-  height: 700px;
-  width: 501px;
+  width: 480px;
+  height: 680px;
   background: rgba(255,255,255,.7);
-  text-align: center;
+  /*text-align: center;*/
   -webkit-transition: .5s all;
 }
 
 #register-Title {
-  font-size: 48px;
-  position: relative;
-  top: 10%;
+  font-size: 36px;
+  margin: 50px 0 22px 39px;
+}
+
+#register-have-account {
+  position: absolute;
+  margin: -19px 0 22px 39px;
+  font-size: 14px;
+  color: darkgrey;
+}
+
+#register-go-login {
+  background: rgba(255,255,255,.0);
+  color: #2E58FF;
+  cursor: pointer;
+}
+
+#register-Input {
+  font-size: 16px;
+  color: #585A58;
 }
 
 #register-Input input{
-  height: 30px;
-  background: rgba(255,255,255,0);
+  background: rgba(255, 255, 255, .7);
+  height: 35px;
+  border: 1px #BDC2CC solid;
+  border-radius: 5px;
+  margin-left: 10px;
+  -webkit-transition: .5s all;
   outline: none;
-  border: 0;
-  border-bottom: 3px darkgrey solid;
-  font-size: 16px;
 }
 
+#register-Input input:hover {
+  border: 1.5px #2E58FF solid;
+
+}
+
+#register-Input-account,#register-Input-password,#register-Input-email,#register-Input-email-code {
+  margin-left: 30px;
+}
+
+
 #register-account-input {
-  width: 350px;
   position: relative;
-  margin-top: 150px;
+  margin-top: 50px;
+  width: 337px;
 }
 
 #register-password-input {
-  width: 350px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 337px;
 }
 
 #register-email-input {
-  width: 350px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 337px;
 }
 
 #register-email-code-input {
-  width: 100px;
-  margin-top: 60px;
+  margin-top: 55px;
+  width: 150px;
 }
 
 #register-send-email {
-  width: 150px;
+  width: 140px;
   height: 40px;
-  margin-left: 100px;
+  margin-left: 50px;
   border: 0;
   border-radius: 5px;
   outline: none;
@@ -173,28 +222,54 @@ export default {
   background: #A8CAF4;
 }
 
-#register-Button-Box {
-  position: relative;
-  margin-top: 97px;
+#register-Input-email-code {
+  letter-spacing: 1px;
 }
 
+
 #register-button {
-  width: 360px;
-  height: 40px;
+  position: absolute;
+  width: 390px;
+  height: 50px;
+  border-radius: 25px;
   border: 0;
-  border-radius: 5px;
+  background: #BDCEFC;
+  color: #fefefe;
+  font-size: 18px;
   outline: none;
-  background: linear-gradient(45deg, #fff1eb, #ace0f9);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
   -webkit-transition: .5s all;
-  cursor: pointer;
+  /*margin-top: 50px;*/
+  bottom: 100px;
+  margin-left: 45px;
 }
 
 #register-button:hover {
-  border: 1px #CCCCFF solid;
-  background: linear-gradient(45deg,#e9defa,#fbfcdb);
+  background: #3f89ec;
+}
+
+
+#register-lastChoice {
+  position: absolute;
+  background: rgba(255,255,255,.0);
+  margin-left: 110px;
+  margin-top: 110px;
+}
+
+#register-lastChoice #register-respect {
+  background: rgba(255,255,255,.0);
+  font-size: 12px;
+}
+
+#register-lastChoice #register-respect #register-agreement {
+  background: rgba(255,255,255,.0);
+  color: #2E58FF;
+  cursor: pointer;
+}
+
+#register-lastChoice #register-respect #register-statement {
+  background: rgba(255,255,255,.0);
+  color: #2E58FF;
+  cursor: pointer;
 }
 
 </style>
