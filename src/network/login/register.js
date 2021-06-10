@@ -9,3 +9,25 @@ export function sendEmailCheck(email) {
     },
   })
 }
+
+export function register(account,password,email) {
+  return request({
+    url: "/user/add",
+    method: "post",
+    data: {
+      id: account,
+      password: password,
+      email: email
+    },
+  })
+}
+
+export function selectId(account) {
+  return request({
+    url: "/user/selectId",
+    method: "post",
+    data: {
+      id: account
+    },
+  })
+}

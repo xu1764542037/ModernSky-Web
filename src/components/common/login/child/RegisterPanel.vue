@@ -19,7 +19,7 @@
       </transition>
     </div>
     <div id="register-Button-Box">
-      <button id="register-button" @click="register">REGISTER</button>
+      <button id="register-button" @click="Register">REGISTER</button>
     </div>
   </div>
 
@@ -27,6 +27,9 @@
 
 <script>
 import {sendEmailCheck} from "@/network/login/register";
+import {register} from "@/network/login/register";
+import {selectId} from "@/network/login/register";
+
 
 export default {
   name: "RegisterPanel",
@@ -42,7 +45,6 @@ export default {
       responseEmailCode: null
     }
   },
-
   methods: {
     showEmailCodeBtn() {
       this.emailCodeBtn = true
@@ -52,8 +54,11 @@ export default {
         alert("请填写邮箱");
         return
       }else {
+        //调用后台发送注册邮件
         sendEmailCheck(this.email).then(res => {
           this.responseEmailCode = res.data
+        }).catch( reason => {
+          alert("系统错误，请联系管理员")
         })
         this.codeCount = 60
         setInterval(() => {
@@ -67,15 +72,36 @@ export default {
         },1000)
       }
     },
-    register() {
-      console.log(this.responseEmailCode);
-      console.log(this.emailCode);
+    Register() {
       if (this.responseEmailCode !== this.emailCode) {
         alert("验证码输出错误")
       }else {
-        alert("注册成功")
-        this.emailCodeBtn = false
-
+        //判断账号是否存在
+        selectId(this.account).then(res => {
+          if (res.obj == null) {
+            //调用后天添加方法
+            register(this.account,this.password,this.email).then(res => {
+              if (res.obj != null) {
+                alert("注册成功")
+                this.account = ""
+                this.password = ""
+                this.email = ""
+                this.emailCode = ""
+                this.emailCodeBtn = false
+                //调用方法给父组件打招呼
+                this.$emit("registerComplete");
+              }else {
+                alert("注册失败，请重新输入")
+              }
+            }).catch(reason => {
+              alert("系统错误，请联系管理员")
+            })
+          }else {
+            alert("账号已被注册，请重新输入")
+          }
+        }).catch( reason => {
+          alert("系统错误，请联系管理员")
+        })
       }
     }
   }
@@ -85,11 +111,11 @@ export default {
 <style scoped>
 #register-Panel {
   position: absolute;
-  margin-left: 34.3%;
-  margin-top: 2%;
+  margin-left: 37%;
+  margin-top: 3%;
   border-radius: 10px;
   height: 700px;
-  width: 601px;
+  width: 501px;
   background: rgba(255,255,255,.7);
   text-align: center;
   -webkit-transition: .5s all;
@@ -98,7 +124,7 @@ export default {
 #register-Title {
   font-size: 48px;
   position: relative;
-  top: 14%;
+  top: 10%;
 }
 
 #register-Input input{
@@ -111,23 +137,23 @@ export default {
 }
 
 #register-account-input {
-  width: 400px;
+  width: 350px;
   position: relative;
   margin-top: 150px;
 }
 
 #register-password-input {
-  width: 400px;
+  width: 350px;
   margin-top: 60px;
 }
 
 #register-email-input {
-  width: 400px;
+  width: 350px;
   margin-top: 60px;
 }
 
 #register-email-code-input {
-  width: 150px;
+  width: 100px;
   margin-top: 60px;
 }
 
@@ -153,7 +179,7 @@ export default {
 }
 
 #register-button {
-  width: 410px;
+  width: 360px;
   height: 40px;
   border: 0;
   border-radius: 5px;

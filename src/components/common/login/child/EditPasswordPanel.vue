@@ -6,7 +6,7 @@
         <input id="edit-password-input" type="text" placeholder="password" v-model="password"/>
       </div>
       <div>
-        <input id="edit-password-repeat-input" type="text" placeholder="Enter the password again" v-model="password"/>
+        <input id="edit-password-repeat-input" type="text" placeholder="again" v-model="password"/>
       </div>
       <div>
         <input id="edit-email-input" type="email" @click="showEmailCodeBtn" placeholder="email" v-model="email"/>
@@ -84,11 +84,11 @@ export default {
 <style scoped>
 #edit-Password-Panel {
   position: absolute;
-  margin-left: 34.3%;
-  margin-top: 2%;
+  margin-left: 37%;
+  margin-top: 3%;
   border-radius: 10px;
   height: 700px;
-  width: 601px;
+  width: 501px;
   background: rgba(255,255,255,.7);
   text-align: center;
   -webkit-transition: .5s all;
@@ -97,7 +97,7 @@ export default {
 #edit-Title {
   font-size: 48px;
   position: relative;
-  top: 14%;
+  top: 10%;
 }
 
 #edit-Input input{
@@ -110,23 +110,23 @@ export default {
 }
 
 #edit-password-input {
-  width: 400px;
+  width: 350px;
   position: relative;
   margin-top: 150px;
 }
 
 #edit-password-repeat-input {
-  width: 400px;
+  width: 350px;
   margin-top: 60px;
 }
 
 #edit-email-input {
-  width: 400px;
+  width: 350px;
   margin-top: 60px;
 }
 
 #edit-email-code-input {
-  width: 150px;
+  width: 100px;
   margin-top: 60px;
 }
 
@@ -152,7 +152,7 @@ export default {
 }
 
 #edit-button {
-  width: 410px;
+  width: 360px;
   height: 40px;
   border: 0;
   border-radius: 5px;

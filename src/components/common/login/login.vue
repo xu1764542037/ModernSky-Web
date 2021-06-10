@@ -1,8 +1,10 @@
 <template>
   <div id="login-Register-Box">
+    <div id="login-Logo">
+      <img src="@/assets/img/logo/logo.png">
+    </div>
     <div id="login-Option"  @click="changePullUp">
       <span>选项
-        <img v-show="isPullUp"  src="@/assets/img/login/bottom.svg" height="18px" width="18px;">
         <img v-show="!isPullUp" src="@/assets/img/login/top.svg" height="18px" width="18px;">
       </span>
     </div>
@@ -19,7 +21,7 @@
       <login-panel v-show="loginPanelShow"></login-panel>
     </transition>
     <transition name="el-zoom-in-center">
-      <register-panel v-show="RegisterPanelShow"></register-panel>
+      <register-panel @registerComplete="changeLoginPanel" v-show="RegisterPanelShow"></register-panel>
     </transition>
     <transition name="el-zoom-in-center">
       <edit-password-panel  v-show="EditPasswordPanelShow"></edit-password-panel>
@@ -38,8 +40,8 @@ export default {
     return {
       leftShow: true,
       rightShow: true,
-      loginPanelShow: false,
-      RegisterPanelShow: true,
+      loginPanelShow: true,
+      RegisterPanelShow: false,
       EditPasswordPanelShow: false,
       isPullUp: false
     }
@@ -66,6 +68,7 @@ export default {
       this.EditPasswordPanelShow = true
       this.isPullUp = false
     }
+
   },
   components: {
     EditPasswordPanel,
@@ -82,6 +85,10 @@ export default {
     height: 100%;
     background: url("../../../assets/img/login/bg.jpg") no-repeat fixed center;
     background-size: cover;
+  }
+
+  #login-Logo {
+    position: absolute;
   }
 
   #login-Option {
