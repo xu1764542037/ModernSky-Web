@@ -22,7 +22,4 @@ export default {
     font-weight: 500;
   }
 
-  #NavBarFunction:hover {
-    /*background: #EEEEEE;*/
-  }
 </style>

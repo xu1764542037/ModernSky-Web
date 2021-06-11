@@ -43,6 +43,7 @@ export default {
       login(this.account,this.password).then(res => {
         // console.log(res);
         if (res.obj != null) {
+          this.$parent.navShow = true
           alert("登录成功")
           this.$router.push({path: "/index"})
         }else {

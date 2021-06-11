@@ -54,7 +54,9 @@ export default {
       this.EditPasswordPanelShow = true
       this.isPullUp = false
     }
-
+  },
+  beforeCreate() {
+    this.$parent.navShow = false
   },
   components: {
     EditPasswordPanel,
@@ -72,7 +74,7 @@ export default {
     background: url("../../../assets/img/login/loginBg.jpg") no-repeat fixed center;
     background-size: cover;
 
-    z-index: -3;
+    z-index: -1;
   }
 
   #login-Logo {

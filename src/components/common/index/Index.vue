@@ -6,7 +6,7 @@
       </div>
       <div slot="button">
         <nav-bat-item><div id="index-home" @click="goHome">首页</div></nav-bat-item>
-        <nav-bat-item><div id="index-forum" @click="goForum">论坛</div></nav-bat-item>
+        <nav-bat-item><div id="index-forum" @click="goForum">天空岛</div></nav-bat-item>
         <nav-bat-item><div id="index-communication" @click="goCommunication">交友</div></nav-bat-item>
         <nav-bat-item><div id="index-dynamic" @click="goDynamic">动态</div></nav-bat-item>
       </div>
@@ -24,7 +24,7 @@
             <div class="index-HeadPItem">个人中心</div>
             <div class="index-HeadPItem">内容管理</div>
             <div class="index-HeadPItem">日常签到</div>
-            <div class="index-HeadPItem">退出</div>
+            <div class="index-HeadPItem" @click="exit">退出</div>
           </div>
         </transition>
       </div>
@@ -72,7 +72,7 @@ export default {
       const searchBtn = document.querySelector("#index-search-btn")
       this.searchBtnIsFocus = !this.searchBtnIsFocus
       if (this.searchBtnIsFocus === true){
-        searchBtn.style.background = "#565656"
+        searchBtn.style.background = "#B67FB6"
       }else {
         searchBtn.style.background = "#A9A9A9"
       }
@@ -104,6 +104,10 @@ export default {
     },
     goDynamic() {
       this.$router.push({path: "/dynamic"})
+    },
+    exit() {
+      this.$router.push({path: "/login"})
+
     }
   },
   components: {
@@ -116,9 +120,9 @@ export default {
 
 <style scoped>
 #index {
-  z-index: -1;
+  z-index: 1;
   position: fixed;
-  height: 100%;
+  height: 5%;
   width: 100%;
   /*background-color: #F6F6F6;*/
 }
@@ -134,22 +138,24 @@ export default {
   outline: none;
   border: 1px #A9A9A9 solid;
   -webkit-transition: .5s all;
-
+  background: rgba(255,255,255,0.3);
 }
 
 #index-search-input:hover {
-  border: 1px #565656 solid;
+  border: 1px #B67FB6 solid;
+  background: rgba(255,255,255,0.7);
 }
 
 #index-search-input:focus {
-  border: 1px #565656 solid;
+  border: 1px #B67FB6 solid;
+  background: rgba(255,255,255,0.7);
 }
 
 #index-search-btn {
   position: absolute;
   height: 75%;
   width: 10%;
-  background-color: #A9A9A9;
+  background-color: #B1B1B1;
   margin-left: 74.2%;
   margin-top: 1.37%;
   border: 0;
@@ -159,7 +165,7 @@ export default {
 }
 
 #index-search-btn:hover {
-  background: #565656;
+  background: #B67FB6;
 }
 
 #index-search-btn-img {
@@ -176,7 +182,7 @@ export default {
   width: 250%;
   line-height: 300%;
   margin-left: -100%;
-  background-color: white;
+  background-color: darkgrey;
   float: top;
   box-shadow: 0 1px 5px #888888;;
 }
@@ -191,7 +197,7 @@ export default {
   width: 130%;
   line-height: 300%;
   margin-left: -18%;
-  background-color: white;
+  background-color: darkgrey;
   float: top;
   box-shadow: 0 1px 5px #888888;;
 }

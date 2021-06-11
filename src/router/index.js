@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 const Login =() => import("@/components/common/login/login")
 const Index =() => import("@/components/common/index/Index")
+const NoviceSteps =() => import("@/components/common/noviceSteps/noviceSteps")
 
 const Home =() => import("@/views/home/Home")
 const Dynamic =() => import("@/views/dynamic/Dynamic")
@@ -27,6 +28,10 @@ const routes = [
     path: '/index',
     redirect: "/home",
     component: Index
+  },
+  {
+    path: '/noviceSteps',
+    component: NoviceSteps
   },
   {
     path: "/home",

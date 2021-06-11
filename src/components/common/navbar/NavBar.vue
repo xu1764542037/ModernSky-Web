@@ -16,12 +16,13 @@ export default {
 
 <style scoped>
 #NavBar {
+  color: white;
   position: fixed;
-  /*border: 1px black solid;*/
   width: 100%;
   height: 5%;
   box-shadow: 0 1px 5px #888888;;
-  background: #ffffff;
+  background-image: linear-gradient( -135deg,#e8cbc0, #636fa4);
+
 }
 
 #logo {

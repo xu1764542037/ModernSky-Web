@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <login></login>
-    <index></index>
+    <index v-show="navShow"></index>
+    <novice-steps></novice-steps>
     <router-view></router-view>
   </div>
 </template>
@@ -9,13 +10,19 @@
 <script>
 import login from "@/components/common/login/login";
 import index from "@/components/common/index/Index"
-
+import noviceSteps from "@/components/common/noviceSteps/noviceSteps";
 
 export default {
   name: 'App',
+  data() {
+    return {
+      navShow: false
+    }
+  },
   components: {
     login,
-    index
+    index,
+    noviceSteps
   }
 }
 </script>
@@ -46,6 +53,7 @@ input{
   outline: none;
   -webkit-transition: .5s all;
     background: linear-gradient(45deg, #fff1eb, #ace0f9);
+  letter-spacing: 1px;
 
  */
 </style>
