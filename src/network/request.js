@@ -4,7 +4,7 @@ export function request(config) {
   // 1.创建axios实例
   const instance = axios.create({
     baseURL: 'http://localhost:8000/modernsky',
-    timeout: 5000
+    timeout: 10000
   })
 
   //2.axios的拦截器

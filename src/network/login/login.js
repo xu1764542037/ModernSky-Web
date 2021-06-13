@@ -2,7 +2,7 @@ import {request} from "../request"
 
 export function login(account,password) {
   return request({
-    url: "/user/login",
+    url: "/user/select",
     method: "post",
     data: {
       id: account,

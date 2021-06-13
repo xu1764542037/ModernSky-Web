@@ -9,7 +9,21 @@ Vue.use(Vuex)
 
 
 const state = {
-
+  userId: '',
+  userPwd: '',
+  userName: '',
+  userEmail: '',
+  userPhone: '',
+  userSex: '',
+  userCreateDate: '',
+  teacherName: '',
+  teacherNumber: '',
+  studentName: '',
+  studentNumber: '',
+  studentClass: '',
+  studentYear: '',
+  studentBranch: '',
+  studentMajor: ''
 }
 
 const store = new Vuex.Store({

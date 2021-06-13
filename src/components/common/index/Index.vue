@@ -29,9 +29,9 @@
         </transition>
       </div>
       <div slot="function">
-        <nav-bar-function>会员中心</nav-bar-function>
+        <nav-bar-function><div id="index-function-member">会员中心</div></nav-bar-function>
         <nav-bar-function>
-          <div @click="changeFunctionShow">消息</div>
+          <div id="index-function-news" @click="changeFunctionShow">消息</div>
           <transition name="el-zoom-in-top">
             <div id="index-FunctionItem" v-show="FunctionShow">
               <div class="index-FunctionItem">好友消息</div>
@@ -41,8 +41,8 @@
             </div>
           </transition>
         </nav-bar-function>
-        <nav-bar-function>历史</nav-bar-function>
-        <nav-bar-function>收藏</nav-bar-function>
+        <nav-bar-function><div id="index-function-history">历史</div></nav-bar-function>
+        <nav-bar-function><div id="index-function-collection">收藏</div></nav-bar-function>
       </div>
 
     </nav-bar>
@@ -204,6 +204,15 @@ export default {
 
 .index-FunctionItem:hover {
   background-color: #F4F4F4;
+}
+
+#index-function-news,#index-function-member,#index-function-collection,#index-function-history {
+  -webkit-transition: .5s all;
+}
+
+#index-function-news:hover,#index-function-member:hover,#index-function-collection:hover,#index-function-history:hover {
+  background: rgba(0,0,0,.3);
+  border-bottom: 1px white solid;
 }
 
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <login></login>
+<!--    <login></login>-->
     <index v-show="navShow"></index>
-    <novice-steps></novice-steps>
+<!--    <novice-steps v-show="stepShow"></novice-steps>-->
     <router-view></router-view>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
   name: 'App',
   data() {
     return {
-      navShow: false
+      navShow: false,
+      stepShow: false
     }
   },
   components: {

@@ -69,9 +69,8 @@ export default {
       }else {
         //调用后台发送注册邮件
         sendEmailCheck(this.email).then(res => {
-          this.responseEmailCode = res.data
-        }).catch( reason => {
-          alert("系统错误，请联系管理员")
+          console.log(res);
+          // this.responseEmailCode = res.data
         })
         this.codeCount = 60
         setInterval(() => {
@@ -220,10 +219,6 @@ export default {
 
 #register-send-email:hover {
   background: #A8CAF4;
-}
-
-#register-Input-email-code {
-  letter-spacing: 1px;
 }
 
 

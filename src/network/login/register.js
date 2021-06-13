@@ -24,7 +24,7 @@ export function register(account,password,email) {
 
 export function selectId(account) {
   return request({
-    url: "/user/selectId",
+    url: "/user/select",
     method: "post",
     data: {
       id: account

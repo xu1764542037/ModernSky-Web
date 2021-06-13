@@ -41,7 +41,7 @@ export default {
   methods: {
     Login() {
       login(this.account,this.password).then(res => {
-        // console.log(res);
+        console.log(res);
         if (res.obj != null) {
           this.$parent.navShow = true
           alert("登录成功")
