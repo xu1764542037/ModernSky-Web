@@ -43,23 +43,35 @@
         </div>
         <div>
           <span class="noviceSteps-input-name">学号</span>
-          <input placeholder="请输入您的学号" type="number" v-model="studentNumber"/>
+          <input placeholder="请输入您的学号" type="text" v-model="studentNumber"/>
         </div>
         <div>
           <span class="noviceSteps-input-name">分院</span>
-          <input placeholder="请输入您的分院" type="number" v-model="studentBranch"/>
+        <select id="noviceSteps-step3-branch" class="selected" v-model="studentBranch">
+          <option name="branch" disabled>---选择院系---</option>
+          <option v-for="branches in studentBranches">{{branches}}</option>
+        </select>
         </div>
         <div>
           <span class="noviceSteps-input-name">专业</span>
-          <input placeholder="请输入您的专业" type="number" v-model="studentMajor"/>
+          <select id="noviceSteps-step3-major" class="selected" v-model="studentMajor">
+            <option name="major" disabled>---选择专业---</option>
+            <option v-for="majors in this.studentMajors">{{majors}}</option>
+          </select>
         </div>
         <div>
           <span class="noviceSteps-input-name">班级</span>
-          <input placeholder="请输入您的班级" type="number" v-model="studentClass"/>
+          <select id="noviceSteps-step3-class" class="selected" v-model="studentClass">
+            <option name="class" disabled>---选择班级---</option>
+            <option v-for="classes in this.studentClasses">{{classes}}</option>
+          </select>
         </div>
         <div>
           <span class="noviceSteps-input-name">年级</span>
-          <input placeholder="请输入您的入学年级" type="number" v-model="studentYear"/>
+          <select id="noviceSteps-step3-year" class="selected" v-model="studentYear">
+            <option name="year" disabled>---选择年级---</option>
+            <option v-for="years in this.studentYears">{{years}}</option>
+          </select>
         </div>
       </div>
       <div v-show="!isStudent" id="noviceSteps-step3-teacher">
@@ -106,24 +118,69 @@ export default {
       step4Show: false,
       identity: '学生',
       isStudent: false,
-      userId: '',
-      userPwd: '',
-      userName: '',
-      userEmail: '',
-      userPhone: '',
+      userId: null,
+      userPwd: null,
+      userName: null,
+      userEmail: null,
+      userPhone: null,
       userSex: '男',
-      userCreateDate: '',
-      teacherName: '',
-      teacherNumber: '',
-      studentName: '',
-      studentNumber: '',
-      studentClass: '',
-      studentYear: '',
-      studentBranch: '',
-      studentMajor: ''
+      userCreateDate: null,
+      teacherName: null,
+      teacherNumber: null,
+      studentName: null,
+      studentNumber: null,
+      studentClass: null,
+      studentClasses: [],
+      studentYear: null,
+      studentYears: [],
+      studentBranch: null,
+      studentBranches: [],
+      studentMajor: null,
+      studentMajors: [],
+      //上一次数据长度
+      beforeMajorDataNumber: 0,
+      beforeClassDataNumber: 0,
+      beforeYearDataNumber: 0
     };
   },
-
+  watch: {
+    studentBranch: {
+      handler() {
+        this.studentMajors.splice(0,this.beforeMajorDataNumber)
+        distinctSelectMajor(this.studentBranch).then( res => {
+          for (let i=0; i<res.obj.length; i++) {
+            // this.studentMajors[i] = res.obj[i].major
+            this.$set(this.studentMajors,i,res.obj[i].major)
+          }
+          this.beforeMajorDataNumber = res.obj.length
+        })
+      }
+    },
+    studentMajor: {
+      handler() {
+        this.studentClasses.splice(0, this.beforeClassDataNumber)
+        distinctSelectClassName(this.studentMajor).then(res => {
+          for (let i = 0; i < res.obj.length; i++) {
+            // this.studentMajors[i] = res.obj[i].major
+            this.$set(this.studentClasses, i, res.obj[i].className)
+          }
+          this.beforeClassDataNumber = res.obj.length
+        })
+      }
+    },
+    studentClass: {
+      handler() {
+        this.studentYears.splice(0, this.beforeYearDataNumber)
+        distinctSelectYear(this.studentClass).then(res => {
+          for (let i = 0; i < res.obj.length; i++) {
+            // this.studentMajors[i] = res.obj[i].major
+            this.$set(this.studentYears, i, res.obj[i].year)
+          }
+          this.beforeYearDataNumber = res.obj.length
+        })
+      }
+    }
+  },
   methods: {
     Identification() {
       if (this.identity === "学生") {
@@ -134,7 +191,6 @@ export default {
     },
     before() {
       if (this.active-- === 0) this.active = 0;
-      console.log(this.active);
       if (this.active === 0) {
         this.step1Show = true
         this.step2Show = false
@@ -163,8 +219,6 @@ export default {
     },
     next() {
       if (this.active++ > 2) this.active = 3;
-      console.log(this.active);
-
       if (this.active === 0) {
         this.step1Show = true
         this.step2Show = false
@@ -196,10 +250,14 @@ export default {
   },
   beforeCreate() {
     distinctSelectBranch().then( res => {
-      console.log(res);
+      for (let i=0; i<res.obj.length; i++) {
+        this.studentBranches.push(res.obj[i].branch)
+      }
+      console.log(this.studentBranches);
     })
   }
 }
+
 </script>
 
 <style scoped>
@@ -231,6 +289,21 @@ input {
   -webkit-transition: .5s all;
   border: 1px black solid;
   margin-top: 100px;
+}
+
+#noviceSteps-step3-branch {
+  margin-top: 30px;
+}
+
+.selected {
+  height: 30px;
+  width: 257px;
+  border-radius: 5px;
+  outline: none;
+  -webkit-transition: .5s all;
+  border: 1px black solid;
+  margin-top: 60px;
+  margin-left: 30px;
 }
 
 .noviceSteps-input-name {
