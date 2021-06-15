@@ -1,15 +1,13 @@
 import {request} from "../request";
 
-export function addUserInfo(id,name,password,sex,email,phone) {
+export function addUserInfo(id,name,sex,phone) {
   return request({
-    url: "/user/add",
+    url: "/user/update",
     method: "post",
     data: {
       id: id,
       name: name,
-      password: password,
       sex: sex,
-      email: email,
       phone: phone
     },
   })
@@ -18,7 +16,7 @@ export function addUserInfo(id,name,password,sex,email,phone) {
 
 export function selectActorId(identity) {
   return request({
-    url: "/user/add",
+    url: "/user/selectActorId",
     method: "post",
     data: {
       name: identity,
@@ -28,7 +26,7 @@ export function selectActorId(identity) {
 
 export function setActor(user_id,actor_id) {
   return request({
-    url: "/user/add",
+    url: "/user/setActor",
     method: "post",
     data: {
       user: user_id,
@@ -55,7 +53,7 @@ export function addStudentInfo(id,name,number,branch,major,className,year) {
 
 export function addTeacherInfo(id,name,jobNumber) {
   return request({
-    url: "/student/add",
+    url: "/teacher/add",
     method: "post",
     data: {
       id: id,
@@ -106,6 +104,36 @@ export function distinctSelectYear(className) {
     data: {
       column: 'year',
       className: className
+    },
+  })
+}
+
+export function selectUser(userId) {
+  return request({
+    url: "/user/select",
+    method: "post",
+    data: {
+      id: userId,
+    },
+  })
+}
+
+export function selectStudent(userId) {
+  return request({
+    url: "/student/select",
+    method: "post",
+    data: {
+      id: userId,
+    },
+  })
+}
+
+export function selectTeacher(userId) {
+  return request({
+    url: "/teacher/select",
+    method: "post",
+    data: {
+      id: userId,
     },
   })
 }

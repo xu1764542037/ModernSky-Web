@@ -15,6 +15,7 @@
       <div id="login-Input-checkCode">
         验证码
         <input id="login-checkCode-input" type="password" placeholder="请输入验证码" v-model="checkCode" @keyup.enter="Login"/>
+        <div id="login-Code-Box" @click="newCode">{{loginCode}}</div>
       </div>
     </div>
     <div id="login-Button-Box">
@@ -27,7 +28,7 @@
 </template>
 
 <script>
-import {login} from "@/network/login/login";
+import {login, selectStudent, selectTeacher, getCode} from "@/network/login/login";
 
 export default {
   name: "LoginPanel",
@@ -35,30 +36,60 @@ export default {
     return {
       account: null,
       password: null,
-      checkCode: null
+      checkCode: null,
+      //登陆验证码
+      loginCode: null
     }
   },
   methods: {
     Login() {
-      login(this.account,this.password).then(res => {
-        console.log(res);
-        if (res.obj != null) {
-          this.$parent.navShow = true
-          alert("登录成功")
-          this.$router.push({path: "/index"})
-        }else {
-          alert("账号密码错误，请重新输入")
-        }
-      }).catch(reason => {
+      if (this.checkCode != this.loginCode) {
+        alert("验证码错误，请重新输入")
+      } else {
+        login(this.account,this.password).then(res => {
+          console.log(res);
+          if (res.obj != null) {
+            this.$parent.navShow = true
+            this.$store.commit('addUserInfo',res.obj[0]);
+            // alert("登录成功")
+            if (res.obj[0].name == null) {
+              this.$router.push({path: "/noviceSteps"})
+            }else {
+              selectStudent(this.account).then(res => {
+                if (res.obj != null) {
+                  this.$store.commit('addStudentInfo',res.obj[0])
+                }else {
+                  selectTeacher(this.account).then(res => {
+                    this.$store.commit('addTeacherInfo',res.obj[0])
+                  })
+                }
+              })
+              this.$router.push({path: "/index"})
+            }
+          }else {
+            alert("账号密码错误，请重新输入")
+          }
+        }).catch(reason => {
           alert("系统发生错误，请联系管理员")
-      })
+        })
+      }
     },
     goRegister() {
       this.$emit("changeRegister")
     },
     goEdit() {
       this.$emit("changeEdit")
+    },
+    newCode() {
+      getCode().then( res => {
+        this.loginCode = res
+      })
     }
+  },
+  beforeCreate() {
+    getCode().then( res => {
+      this.loginCode = res
+    })
   }
 }
 </script>
@@ -142,6 +173,21 @@ export default {
 
 #login-Input-checkCode {
   letter-spacing: 1px;
+}
+
+#login-Code-Box {
+  position: absolute;
+  margin-top: -36px;
+  margin-left: 300px;
+  width: 100px;
+  height: 35px;
+  border: 1px black solid;
+  /*background: darkgrey;*/
+  background: rgba(0,0,0,.2);
+  float: left;
+  letter-spacing: 2.5px;
+  text-align: center;
+  font-size: 30px;
 }
 
 #login-button {

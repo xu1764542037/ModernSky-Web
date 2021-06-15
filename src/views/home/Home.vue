@@ -94,7 +94,6 @@ export default {
   position: absolute;
   width: 80%;
   height: 93%;
-  /*background: white;*/
   background-image: linear-gradient( -135deg,#d9a7c7, #fffcdc);
   margin-left: 10%;
   margin-top: 1%;

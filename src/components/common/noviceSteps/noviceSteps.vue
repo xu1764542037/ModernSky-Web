@@ -47,10 +47,10 @@
         </div>
         <div>
           <span class="noviceSteps-input-name">分院</span>
-        <select id="noviceSteps-step3-branch" class="selected" v-model="studentBranch">
-          <option name="branch" disabled>---选择院系---</option>
-          <option v-for="branches in studentBranches">{{branches}}</option>
-        </select>
+          <select id="noviceSteps-step3-branch" class="selected" v-model="studentBranch">
+            <option name="branch" disabled>---选择院系---</option>
+            <option v-for="branches in studentBranches">{{branches}}</option>
+          </select>
         </div>
         <div>
           <span class="noviceSteps-input-name">专业</span>
@@ -79,16 +79,18 @@
         <div>
           <span class="noviceSteps-input-name">姓名</span>
           <input placeholder="请输入您的真实姓名" type="text" v-model="teacherName"/>
+          {{teacherName}}
         </div>
         <div>
           <span class="noviceSteps-input-name">工号</span>
-          <input placeholder="请输入您的教师工号" type="number" v-model="teacherNumber"/>
+          <input placeholder="请输入您的教师工号" type="text" v-model="teacherNumber"/>
+          {{teacherNumber}}
         </div>
       </div>
     </div>
     <div id="noviceSteps-step4" v-show="step4Show">
       <div>
-        <h1>您已完成所有新手必填<br/>点此去往ModernSky</h1>
+        <h1 id="goModernSky" @click="goModernSky">点此去往ModernSky</h1>
       </div>
     </div>
     <div id="noviceSteps-steps">
@@ -104,7 +106,7 @@
 </template>
 
 <script>
-import {addUserInfo, selectActorId, setActor, addStudentInfo, addTeacherInfo} from "@/network/noviceSteps/noviceSteps";
+import {addUserInfo, selectActorId, setActor, addStudentInfo, addTeacherInfo, selectUser, selectStudent, selectTeacher} from "@/network/noviceSteps/noviceSteps";
 import {distinctSelectBranch,distinctSelectMajor,distinctSelectClassName,distinctSelectYear} from "@/network/noviceSteps/noviceSteps";
 
 export default {
@@ -118,13 +120,9 @@ export default {
       step4Show: false,
       identity: '学生',
       isStudent: false,
-      userId: null,
-      userPwd: null,
       userName: null,
-      userEmail: null,
       userPhone: null,
       userSex: '男',
-      userCreateDate: null,
       teacherName: null,
       teacherNumber: null,
       studentName: null,
@@ -204,17 +202,7 @@ export default {
         this.step4Show = false
 
       } else if (this.active === 2){
-        this.step1Show = false
-        this.step2Show = false
-        this.step3Show = true
-        this.step4Show = false
-
-      }
-      else if (this.active === 3){
-        this.step1Show = false
-        this.step2Show = false
-        this.step3Show = false
-        this.step4Show = true
+        this.active = 3
       }
     },
     next() {
@@ -237,15 +225,65 @@ export default {
         this.step3Show = true
         this.step4Show = false
 
+      } else if (this.active === 3){
+          if (confirm("您确定保存填写的信息吗？")){
+            this.saveInfo()
+            alert("已完成并保存了所填信息")
+
+            //把信息存在vuex里面
+            const userId = this.$store.state.userId
+            selectUser(userId).then( res => {
+              this.$store.commit('addUserInfo',res.obj[0])
+            })
+
+            if (this.identity === "学生") {
+              selectStudent(userId).then( res => {
+                this.$store.commit('addStudentInfo',res.obj[0])
+              })
+            } else {
+              selectTeacher(userId).then( res => {
+                this.$store.commit('addTeacherInfo',res.obj[0])
+              })
+            }
+              this.step1Show = false
+            this.step2Show = false
+            this.step3Show = false
+            this.step4Show = true
+          }
       }
-      else if (this.active === 3){
-        this.step1Show = false
-        this.step2Show = false
-        this.step3Show = false
-        this.step4Show = true
+      this.Identification()
+    },
+    //保存填写的信息
+    saveInfo() {
+      //添加用户信息
+      const userId = this.$store.state.userId
+      addUserInfo(userId,this.userName,this.userSex,this.userPhone).then( res => {
+        console.log(res);
+      })
+      //设置权限
+      selectActorId(this.identity).then( res => {
+        const actorId = res.obj[0].id
+        setActor(userId,actorId).then(res => {
+          console.log(res);
+        })
+      })
+      //判断身份保存内容
+      if (this.identity === "学生") {
+        //添加学生信息
+        addStudentInfo(userId,this.studentName,this.studentNumber,this.studentBranch,this.studentMajor,this.studentClass,this.studentYear).then( res => {
+          console.log(res);
+
+        })
+      } else {
+        //添加老师信息
+        addTeacherInfo(userId,this.teacherName,this.teacherNumber).then( res => {
+          console.log(res);
+        })
       }
 
-      this.Identification()
+    },
+    goModernSky() {
+      this.$router.push({path: "/index"})
     }
   },
   beforeCreate() {
@@ -253,7 +291,6 @@ export default {
       for (let i=0; i<res.obj.length; i++) {
         this.studentBranches.push(res.obj[i].branch)
       }
-      console.log(this.studentBranches);
     })
   }
 }
@@ -265,12 +302,14 @@ export default {
   position: fixed;
   height: 100%;
   width: 100%;
-  background: white;
+  background-image: linear-gradient( 125deg,#E3FDF5, #FFE6FA);
+
+  /*background: white;*/
 }
 
 #noviceSteps-title {
   position: absolute;
-  margin-left: 38%;
+  margin-left: 39%;
   margin-top: 1%;
 }
 
@@ -321,7 +360,7 @@ input:hover {
 
 #noviceSteps-step1 {
   position: absolute;
-  margin-left: 41.5%;
+  margin-left: 42%;
   margin-top: 7%;
 }
 
@@ -333,13 +372,13 @@ input:hover {
 
 #noviceSteps-step2 {
   position: absolute;
-  margin-left: 41.5%;
+  margin-left: 42%;
   margin-top: 7%;
 }
 
  h3{
   position: relative;
-  margin-left: 50px;
+  margin-left: 75px;
 }
 
 #noviceSteps-step2-label {
@@ -350,7 +389,7 @@ input:hover {
 
 #noviceSteps-step3 {
   position: absolute;
-  margin-left: 41.5%;
+  margin-left: 42%;
   margin-top: 7%;
 }
 
@@ -364,7 +403,12 @@ input:hover {
 
 #noviceSteps-step4 {
   position: absolute;
-  margin-left: 41.5%;
+  margin-left: 42%;
   margin-top: 7%
+}
+
+#noviceSteps-step4 #goModernSky {
+  margin-top: 75%;
+  cursor: pointer;
 }
 </style>
