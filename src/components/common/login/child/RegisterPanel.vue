@@ -70,7 +70,7 @@ export default {
         //调用后台发送注册邮件
         sendEmailCheck(this.email).then(res => {
           console.log(res);
-          // this.responseEmailCode = res.data
+          this.responseEmailCode = res.data
         })
         this.codeCount = 60
         setInterval(() => {

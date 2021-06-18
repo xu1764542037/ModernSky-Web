@@ -21,7 +21,7 @@
         <img v-show="HeadPIsClick" @click="changHeadPIsClick" src="@/assets/img/index/HeadP2.svg" height="36px" width="36px">
         <transition name="el-zoom-in-top">
           <div id="index-HeadPItem" v-show="HeadPShow">
-            <div class="index-HeadPItem">个人中心</div>
+            <div class="index-HeadPItem" @click="goMine">个人中心</div>
             <div class="index-HeadPItem">内容管理</div>
             <div class="index-HeadPItem">日常签到</div>
             <div class="index-HeadPItem" @click="exit">退出</div>
@@ -105,10 +105,28 @@ export default {
     goDynamic() {
       this.$router.push({path: "/dynamic"})
     },
+    goMine() {
+      this.$router.push({path: "/mine"})
+      this.HeadPShow = false
+      this.HeadPIsClick = !this.HeadPIsClick
+
+    },
     exit() {
       this.$router.push({path: "/login"})
+      this.HeadPShow = false
+      this.HeadPIsClick = !this.HeadPIsClick
 
     }
+  },
+  mounted() {
+    document.addEventListener('click',e => {
+      if(!this.$el.contains(e.target)){
+        this.HeadPShow = false//点击其他区域关闭
+        this.FunctionShow = false
+        this.HeadPIsClick = false
+
+      }
+    })
   },
   components: {
     NavBar,
@@ -183,7 +201,7 @@ export default {
   margin-left: -100%;
   background-color: darkgrey;
   float: top;
-  box-shadow: 0 1px 5px #888888;;
+  box-shadow: 0 1px 5px #888888;
 }
 
 .index-HeadPItem:hover {

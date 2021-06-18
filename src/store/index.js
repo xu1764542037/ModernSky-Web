@@ -16,6 +16,7 @@ const state = {
   userPhone: '',
   userSex: '',
   userCreateDate: '',
+  userAutograph: '',
   teacherName: '',
   teacherNumber: '',
   studentName: '',

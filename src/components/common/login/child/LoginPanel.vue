@@ -47,7 +47,7 @@ export default {
         alert("验证码错误，请重新输入")
       } else {
         login(this.account,this.password).then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.obj != null) {
             this.$parent.navShow = true
             this.$store.commit('addUserInfo',res.obj[0]);
@@ -60,7 +60,9 @@ export default {
                   this.$store.commit('addStudentInfo',res.obj[0])
                 }else {
                   selectTeacher(this.account).then(res => {
-                    this.$store.commit('addTeacherInfo',res.obj[0])
+                    if (res.obj != null) {
+                      this.$store.commit('addTeacherInfo',res.obj[0])
+                    }
                   })
                 }
               })
@@ -69,8 +71,6 @@ export default {
           }else {
             alert("账号密码错误，请重新输入")
           }
-        }).catch(reason => {
-          alert("系统发生错误，请联系管理员")
         })
       }
     },

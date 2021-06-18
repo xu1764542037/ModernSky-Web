@@ -287,6 +287,8 @@ export default {
     }
   },
   beforeCreate() {
+    this.$parent.navShow = false
+
     distinctSelectBranch().then( res => {
       for (let i=0; i<res.obj.length; i++) {
         this.studentBranches.push(res.obj[i].branch)

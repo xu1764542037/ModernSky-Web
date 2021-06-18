@@ -16,7 +16,7 @@ export default {
   name: 'App',
   data() {
     return {
-      navShow: false,
+      navShow: true,
       stepShow: false
     }
   },
@@ -34,7 +34,8 @@ export default {
   padding: 0;
 }
 body{
-  font-family: PingFang-SC-Regular,Helvetica,"Microsoft Yahei","微软雅黑";
+  /*font-family: PingFang-SC-Regular,Helvetica,"Microsoft Yahei","微软雅黑";*/
+  font-family: PingFangSC-Regular!important;
   overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -55,6 +56,11 @@ input{
   -webkit-transition: .5s all;
     background: linear-gradient(45deg, #fff1eb, #ace0f9);
   letter-spacing: 1px;
+
+  //不可被点击
+  pointer-events: none;
+
+      this.$set(this,'isMan',false)
 
  */
 </style>
