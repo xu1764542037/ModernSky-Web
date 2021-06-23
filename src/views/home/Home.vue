@@ -10,7 +10,7 @@
           <div slot="p">*某男子在宿舍洗澡突然停电，感冒送医</div>
           <div slot="p">*某男子连续跑步5个小时直接昏迷</div>
           <div slot="p">*某男子在食堂吃饭吃出蟑螂</div>
-          <div slot="p">*某男子因网恋对象为男性当成去世</div>
+          <div slot="p">*某男子因网恋对象为男性当场去世</div>
           <div slot="p">*某男子在校门口被表白结果发现女方认错人</div>
         </home-news>
         <home-news>
@@ -64,6 +64,7 @@
 import HomeCarousel from "@/views/home/child/HomeCarousel";
 import HomeNews from "@/views/home/child/HomeNews";
 import HomeArticle from "@/views/home/child/HomeArticle";
+import {batchSelect, selectAId} from "@/network/mine/edit/edit";
 
 
 export default {
@@ -71,11 +72,33 @@ export default {
   components: {
     HomeCarousel,
     HomeNews,
-    HomeArticle
+    HomeArticle,
+    ids: ''
   },
   beforeCreate() {
     this.$parent.navShow = true
-  }
+    this.$store.commit('cleanIdentities')
+    const id = this.$store.state.userId
+    selectAId(id).then( res => {
+      if (res.obj != null) {
+        for (let i = 0; i < res.obj.length; i++) {
+          if (i === res.obj.length - 1) {
+            this.ids = this.ids + "-" + "" + res.obj[i].actor_id + "-"
+          } else {
+            this.ids = this.ids + "-" + "" + res.obj[i].actor_id
+          }
+        }
+      }
+      batchSelect(this.ids).then( res => {
+        // console.log(res);
+        if (res.obj != null){
+          for (let i=0; i<res.obj.length; i++) {
+            this.$store.commit('addUerIdentities',res.obj[i].name)
+          }
+        }
+      })
+    })
+  },
 }
 </script>
 

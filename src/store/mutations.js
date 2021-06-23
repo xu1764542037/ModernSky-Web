@@ -25,5 +25,14 @@ export default {
   addTeacherInfo(state,payload) {
     state.teacherName = payload.name
     state.teacherNumber = payload.jobNumber
+  },
+
+  addUerIdentities(state,payload) {
+      state.userIdentities.push(payload);
+  },
+
+  cleanIdentities(state,payload) {
+    const length = state.userIdentities.length
+    state.userIdentities.splice(0,length)
   }
 }

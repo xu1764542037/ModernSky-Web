@@ -24,7 +24,8 @@ const state = {
   studentClass: '',
   studentYear: '',
   studentBranch: '',
-  studentMajor: ''
+  studentMajor: '',
+  userIdentities: []
 }
 
 const store = new Vuex.Store({

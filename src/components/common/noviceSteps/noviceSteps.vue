@@ -79,18 +79,16 @@
         <div>
           <span class="noviceSteps-input-name">姓名</span>
           <input placeholder="请输入您的真实姓名" type="text" v-model="teacherName"/>
-          {{teacherName}}
         </div>
         <div>
           <span class="noviceSteps-input-name">工号</span>
           <input placeholder="请输入您的教师工号" type="text" v-model="teacherNumber"/>
-          {{teacherNumber}}
         </div>
       </div>
     </div>
     <div id="noviceSteps-step4" v-show="step4Show">
       <div>
-        <h1 id="goModernSky" @click="goModernSky">点此去往ModernSky</h1>
+        <h1 id="goLogin" @click="goLogin">点击进入登录页面重新登录</h1>
       </div>
     </div>
     <div id="noviceSteps-steps">
@@ -228,24 +226,7 @@ export default {
       } else if (this.active === 3){
           if (confirm("您确定保存填写的信息吗？")){
             this.saveInfo()
-            alert("已完成并保存了所填信息")
-
-            //把信息存在vuex里面
-            const userId = this.$store.state.userId
-            selectUser(userId).then( res => {
-              this.$store.commit('addUserInfo',res.obj[0])
-            })
-
-            if (this.identity === "学生") {
-              selectStudent(userId).then( res => {
-                this.$store.commit('addStudentInfo',res.obj[0])
-              })
-            } else {
-              selectTeacher(userId).then( res => {
-                this.$store.commit('addTeacherInfo',res.obj[0])
-              })
-            }
-              this.step1Show = false
+            this.step1Show = false
             this.step2Show = false
             this.step3Show = false
             this.step4Show = true
@@ -258,32 +239,33 @@ export default {
       //添加用户信息
       const userId = this.$store.state.userId
       addUserInfo(userId,this.userName,this.userSex,this.userPhone).then( res => {
-        console.log(res);
+        // console.log(res);
       })
       //设置权限
       selectActorId(this.identity).then( res => {
         const actorId = res.obj[0].id
         setActor(userId,actorId).then(res => {
-          console.log(res);
+          // console.log(res);
         })
       })
       //判断身份保存内容
       if (this.identity === "学生") {
         //添加学生信息
         addStudentInfo(userId,this.studentName,this.studentNumber,this.studentBranch,this.studentMajor,this.studentClass,this.studentYear).then( res => {
-          console.log(res);
+          // console.log(res);
 
         })
       } else {
         //添加老师信息
         addTeacherInfo(userId,this.teacherName,this.teacherNumber).then( res => {
-          console.log(res);
+          // console.log(res);
         })
       }
 
     },
-    goModernSky() {
-      this.$router.push({path: "/index"})
+    goLogin() {
+          sessionStorage.setItem("token", 'false');
+          this.$router.push({path: "/login"})
     }
   },
   beforeCreate() {

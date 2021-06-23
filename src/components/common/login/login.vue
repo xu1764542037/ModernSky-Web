@@ -7,7 +7,7 @@
       <login-panel @changeRegister="changeRegisterPanel" @changeEdit="changeEditPasswordPanel" v-show="loginPanelShow"></login-panel>
     </transition>
     <transition name="el-fade-in-linear">
-      <register-panel @changeLogin="changeLoginPanel" v-show="RegisterPanelShow"></register-panel>
+      <register-panel @registerComplete="changeLoginPanel" @changeLogin="changeLoginPanel" v-show="RegisterPanelShow"></register-panel>
     </transition>
     <transition name="el-fade-in-linear">
       <edit-password-panel  v-show="EditPasswordPanelShow"></edit-password-panel>

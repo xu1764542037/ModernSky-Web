@@ -16,7 +16,7 @@ export function addUserInfo(id,name,sex,phone) {
 
 export function selectActorId(identity) {
   return request({
-    url: "/user/selectActorId",
+    url: "/actor/select",
     method: "post",
     data: {
       name: identity,

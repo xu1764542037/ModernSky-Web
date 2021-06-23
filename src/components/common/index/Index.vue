@@ -53,6 +53,7 @@
 import NavBar from "@/components/common/navbar/NavBar";
 import NavBatItem from "@/components/common/navbar/NavBarItem";
 import NavBarFunction from "@/components/common/navbar/NavBarFunction";
+import {batchSelect, selectAId} from "@/network/mine/edit/edit";
 
 export default {
   name: "Index",
@@ -112,10 +113,10 @@ export default {
 
     },
     exit() {
+      sessionStorage.setItem("token", 'false');
       this.$router.push({path: "/login"})
       this.HeadPShow = false
       this.HeadPIsClick = !this.HeadPIsClick
-
     }
   },
   mounted() {
