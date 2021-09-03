@@ -51,7 +51,6 @@ export default {
           if (res.obj != null) {
             this.$parent.navShow = true
             this.$store.commit('addUserInfo',res.obj[0]);
-            sessionStorage.setItem("token", 'true');
             // alert("登录成功")
             // console.log(res.obj);
             if (res.obj[0].name == null || res.obj[0].name === '') {

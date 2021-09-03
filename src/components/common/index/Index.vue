@@ -1,34 +1,38 @@
 <template>
-  <div id="index">
+  <div id="index" @mousedown="closeSel">
     <nav-bar>
       <div slot="logo">
         <img id="index-logo" src="@/assets/img/logo/logo.png" height="50" width="160">
       </div>
+
       <div slot="button">
-        <nav-bat-item><div id="index-home" @click="goHome">首页</div></nav-bat-item>
-        <nav-bat-item><div id="index-forum" @click="goForum">天空岛</div></nav-bat-item>
-        <nav-bat-item><div id="index-communication" @click="goCommunication">交友</div></nav-bat-item>
-        <nav-bat-item><div id="index-dynamic" @click="goDynamic">动态</div></nav-bat-item>
+        <nav-bat-item><div id="index-home" @mousedown="goHome">首页</div></nav-bat-item>
+        <nav-bat-item><div id="index-forum" @mousedown="goForum">天空岛</div></nav-bat-item>
+        <nav-bat-item><div id="index-communication" @mousedown="goCommunication">交友</div></nav-bat-item>
+        <nav-bat-item><div id="index-dynamic" @mousedown="goDynamic">动态</div></nav-bat-item>
       </div>
+
       <div slot="searchBar">
-        <input type="text" placeholder=" 点我搜索" id="index-search-input" @focus="searchInput" @blur="searchInput"/>
+        <input type="text" placeholder=" 点此搜索" id="index-search-input" @focus="searchInput" @blur="searchInput"/>
         <div id="index-search-btn">
           <img id="index-search-btn-img" src="@/assets/img/index/search.svg" height="20" width="20">
         </div>
       </div>
-      <div slot="headP">
+
+      <div slot="headP" id="headPBox">
         <img v-show="!HeadPIsClick" @click="changHeadPIsClick" src="@/assets/img/index/HeadP.svg" height="36px" width="36px">
         <img v-show="HeadPIsClick" @click="changHeadPIsClick" src="@/assets/img/index/HeadP2.svg" height="36px" width="36px">
         <transition name="el-zoom-in-top">
           <div id="index-HeadPItem" v-show="HeadPShow">
-            <div class="index-HeadPItem" @click="goMine">个人中心</div>
+            <div class="index-HeadPItem" @mousedown="goMine">个人中心</div>
             <div class="index-HeadPItem">内容管理</div>
             <div class="index-HeadPItem">日常签到</div>
-            <div class="index-HeadPItem" @click="exit">退出</div>
+            <div class="index-HeadPItem" @mousedown="exit">退出</div>
           </div>
         </transition>
       </div>
-      <div slot="function">
+
+      <div slot="function" id="functionBox">
         <nav-bar-function><div id="index-function-member">会员中心</div></nav-bar-function>
         <nav-bar-function>
           <div id="index-function-news" @click="changeFunctionShow">消息</div>
@@ -44,7 +48,6 @@
         <nav-bar-function><div id="index-function-history">历史</div></nav-bar-function>
         <nav-bar-function><div id="index-function-collection">收藏</div></nav-bar-function>
       </div>
-
     </nav-bar>
   </div>
 </template>
@@ -57,40 +60,92 @@ import {batchSelect, selectAId} from "@/network/mine/edit/edit";
 
 export default {
   name: "Index",
-  data() {
-    return {
-      searchBtnIsFocus: false,
-      HeadPIsClick: false,
-      HeadPShow: false,
-      FunctionShow: false
-    }
-  },
-  methods: {
-    /**
-     * navbar的一些方法
-     */
-    searchInput() {
-      const searchBtn = document.querySelector("#index-search-btn")
-      this.searchBtnIsFocus = !this.searchBtnIsFocus
-      if (this.searchBtnIsFocus === true){
-        searchBtn.style.background = "#B67FB6"
-      }else {
-        searchBtn.style.background = "#A9A9A9"
+  watch: {
+    isHeadPShow: {
+      handler() {
+        if (this.HeadPShow === true) {
+          this.FunctionShow = false
+          this.functionNum = 0
+          this.HeadPIsClick = false
+        }
       }
     },
-    changHeadPIsClick() {
-      this.HeadPIsClick = !this.HeadPIsClick
-      this.HeadPShow = !this.HeadPShow
-
-      this.FunctionShow = false
+    isFunctionShow: {
+      handler() {
+        if (this.FunctionShow === true) {
+          this.HeadPShow = false
+          this.headPNum = 0
+          this.HeadPIsClick = false
+        }
+        }
+      }
     },
-    changeFunctionShow() {
-      this.FunctionShow = !this.FunctionShow
-
-      this.HeadPIsClick = false
-      this.HeadPShow = false
+    data() {
+      return {
+        searchBtnIsFocus: false,
+        HeadPIsClick: false,
+        HeadPShow: false,
+        FunctionShow: false,
+        headPNum: 0,
+        functionNum: 0,
+      }
     },
+    methods: {
+      /**
+       * navbar的一些方法
+       */
+      searchInput() {
+        const searchBtn = document.querySelector("#index-search-btn")
+        this.searchBtnIsFocus = !this.searchBtnIsFocus
+        if (this.searchBtnIsFocus === true){
+          searchBtn.style.background = "#B67FB6"
+        }else {
+          searchBtn.style.background = "#A9A9A9"
+        }
+      },
+      changHeadPIsClick() {
+        if (this.headPNum === 0) {
+          this.HeadPIsClick = true
+          this.HeadPShow = true
+          this.headPNum = 1
+        } else {
+          this.HeadPIsClick = false
+          this.HeadPShow = false
+          this.headPNum = 0
+        }
+      },
+      changeFunctionShow() {
+        if (this.functionNum === 0) {
+          this.FunctionShow = true
+          this.functionNum = 1
+        } else {
+          this.FunctionShow = false
+          this.functionNum = 0
+        }
+      },
+      closeSel(event){
+        const headP = document.getElementById("headPBox");
+        if(headP){
+          if(!headP.contains(event.target)){  //点击到了id为navMenu以外的区域，隐藏下拉框
+            this.HeadPShow = false
+            this.headPNum = 0
+            this.FunctionShow = false
+            this.functionNum = 0
+            this.HeadPIsClick = false
+          }
+        }
 
+        const functions = document.getElementById("functionBox");
+        if(functions){
+          if(!functions.contains(event.target)){  //点击到了id为navMenu以外的区域，隐藏下拉框
+            this.HeadPShow = false
+            this.headPNum = 0
+            this.FunctionShow = false
+            this.functionNum = 0
+            this.HeadPIsClick = false
+          }
+        }
+      },
     /**
      * 一些跳转方法
      */
@@ -109,11 +164,9 @@ export default {
     goMine() {
       this.$router.push({path: "/mine"})
       this.HeadPShow = false
-      this.HeadPIsClick = !this.HeadPIsClick
-
+      this.HeadPIsClick = false
     },
     exit() {
-      sessionStorage.setItem("token", 'false');
       this.$router.push({path: "/login"})
       this.HeadPShow = false
       this.HeadPIsClick = !this.HeadPIsClick
@@ -125,7 +178,8 @@ export default {
         this.HeadPShow = false//点击其他区域关闭
         this.FunctionShow = false
         this.HeadPIsClick = false
-
+        this.functionNum = 0
+        this.headPNum = 0
       }
     })
   },

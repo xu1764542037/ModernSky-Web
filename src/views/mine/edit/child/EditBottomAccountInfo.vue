@@ -56,7 +56,6 @@ export default {
             deleteUser(id).then( res => {
               console.log(res);
               alert("账号已注销，返回登录页")
-              sessionStorage.setItem("token", 'false');
               this.$router.replace({path: "/login"})
             })
           })

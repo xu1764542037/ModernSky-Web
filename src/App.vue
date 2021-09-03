@@ -24,6 +24,21 @@ export default {
     login,
     index,
     noviceSteps
+  },
+  created () {
+    setTimeout(() => {
+      window.L2Dwidget.init({
+        pluginRootPath: 'static/live2dw/',
+        pluginJsPath: 'lib/',
+        pluginModelPath: 'live2d-widget-model-koharu/assets/',
+        tagMode: false,
+        debug: false,
+        model: { jsonPath: '/static/live2dw/live2d-widget-model-koharu/assets/koharu.model.json' },
+        display: { position: 'right', width: 150, height: 300 },
+        mobile: { show: true },
+        log: false
+      })
+    }, 1000)
   }
 }
 </script>
@@ -32,11 +47,13 @@ export default {
 *{
   margin: 0;
   padding: 0;
+  outline: none;
+
 }
 body{
   /*font-family: PingFang-SC-Regular,Helvetica,"Microsoft Yahei","微软雅黑";*/
   font-family: PingFangSC-Regular!important;
-  overflow: hidden;
+  /*overflow: auto;*/
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -48,6 +65,23 @@ body{
 
 input{
   padding-left: 5px;
+}
+
+
+/*滚动条样式*/
+body::-webkit-scrollbar {
+  width: 4px;
+  /*height: 4px;*/
+}
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 0;
+  background: rgba(0,0,0,0.1);
 }
 
 /**

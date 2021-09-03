@@ -32,66 +32,39 @@ const routes = [
   {
     path: '/index',
     redirect: "/home",
-    component: Index,
-    meta: {
-      requireAuth: true
-    }
+    component: Index
   },
   {
     path: '/noviceSteps',
-    component: NoviceSteps,
-    meta: {
-      requireAuth: true
-    }
+    component: NoviceSteps
   },
   {
     path: "/home",
     component: Home,
-    meta: {
-      requireAuth: true
-    }
   },
   {
     path: '/forum',
     component: Forum,
-    meta: {
-      requireAuth: true
-    }
   },
   {
     path: '/communication',
     component: Communication,
-    meta: {
-      requireAuth: true
-    }
   },
   {
     path: '/dynamic',
     component: Dynamic,
-    meta: {
-      requireAuth: true
-    }
   },
   {
     path: '/mine',
     component: Mine,
-    meta: {
-      requireAuth: true
-    },
     children: [
       {
         path: 'edit',
         component: Edit,
-        meta: {
-          requireAuth: true
-        },
         children: [
           {
             path: 'info-center',
-            component: InfoCenter,
-            meta: {
-              requireAuth: true
-            }
+            component: InfoCenter
           }
         ]
       }
@@ -125,21 +98,4 @@ export default router
  * token
  */
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-    if (sessionStorage.getItem("token") == 'true') { // 判断本地是否存在token
-      next()
-    } else {
-      // 未登录,跳转到登陆页面
-      next({
-        path: '/login'
-      })
-    }
-  } else {
-    if(sessionStorage.getItem("token") == 'true'){
-      next('/index/table');
-    }else{
-      next();
-    }
-  }
-});
+

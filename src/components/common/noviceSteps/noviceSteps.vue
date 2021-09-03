@@ -264,7 +264,6 @@ export default {
 
     },
     goLogin() {
-          sessionStorage.setItem("token", 'false');
           this.$router.push({path: "/login"})
     }
   },
