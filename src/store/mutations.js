@@ -6,7 +6,7 @@ export default {
     state.userSex = plyload.sex
     state.userEmail = plyload.email
     state.userPhone = plyload.phone
-    state.userCreateDate = plyload.createDate.split("T")[0]
+    state.userCreateDate = plyload.createdate.split("T")[0]
     state.userAutograph = plyload.autograph
   },
 

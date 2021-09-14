@@ -52,7 +52,7 @@ export default {
             this.$parent.navShow = true
             this.$store.commit('addUserInfo',res.obj[0]);
             // alert("登录成功")
-            // console.log(res.obj);
+            console.log(res.obj);
             if (res.obj[0].name == null || res.obj[0].name === '') {
               this.$router.push({path: "/noviceSteps"})
             }else {

@@ -59,7 +59,7 @@
         <forum-data v-for="(data,index) in CurrentData">
           <div slot="img"><img src="@/assets/img/Forum/headP.svg"></div>
           <div slot="name">{{ data.name }}</div>
-          <div slot="function" class="Forum-DataPlace-Function">十加入 | {{data.people}}人</div>
+          <div slot="function" class="Forum-DataPlace-Function">+ 加入 | {{data.people}}人</div>
           <div slot="introduction">简介：{{data.title}}</div>
         </forum-data>
       </div>
@@ -70,7 +70,8 @@
 <script>
 import ForumSidebar from "@/views/forum/child/ForumSidebar";
 import ForumData from "@/views/forum/child/ForumData";
-import {distinctSelectType, select} from "@/network/forum/forum";
+import {distinctSelectType, select, selectIId, batchSelectIsland} from "@/network/forum/forum";
+
 
 export default {
   name: "Forum",
@@ -84,7 +85,8 @@ export default {
       isClickList: false,
       SearchObj: '',
       CurrentClickNum: -1,//默认为  我加入的天空岛
-      CurrentData: []
+      CurrentData: [],
+      JoinIslandData: []
     }
   },
   methods: {
@@ -96,7 +98,21 @@ export default {
     changeListNum(num) {
       this.CurrentClickNum = num
       let type = ''
-      if (num === 1) {
+      if (num === 0) {
+        // this.CurrentData = this.JoinIslandData
+        console.log(this.JoinIslandData);
+
+        const id = this.$store.state.userId
+        selectIId(id).then( res => {
+          let IIds = "-"
+          for (let i = 0; i< res.obj.length; i++) {
+            IIds = IIds + res.obj[i].i_id + "-"
+          }
+          batchSelectIsland(IIds).then( res => {
+            this.CurrentData = res.obj
+          })
+        })
+      } else if (num === 1) {
         type = "学习"
       } else if (num === 2) {
         type = "运动"
@@ -118,12 +134,26 @@ export default {
         this.CurrentData = res.obj
         this.CurrentClickNum = -1
       })
+    },
+    test() {
+      this.CurrentData
+
     }
   },
   beforeCreate() {
     select().then( res => {
-      console.log(res);
       this.CurrentData = res.obj
+    })
+
+    const id = this.$store.state.userId
+    selectIId(id).then( res => {
+      let IIds = "-"
+      for (let i = 0; i< res.obj.length; i++) {
+        IIds = IIds + res.obj[i].i_id + "-"
+      }
+      batchSelectIsland(IIds).then( res => {
+        this.JoinIslandData = res.obj
+      })
     })
   }
 }
@@ -287,3 +317,6 @@ export default {
 
 
 </style>
+
+
+

@@ -10,6 +10,26 @@ export function select(name) {
   })
 }
 
+export function selectIId(id) {
+  return request({
+    url: "/island/selectIId",
+    method: "post",
+    data: {
+      id: id
+    },
+  })
+}
+
+export function batchSelectIsland(ids) {
+  return request({
+    url: "/island/batchSelectIsland",
+    method: "post",
+    data: {
+      ids: ids
+    },
+  })
+}
+
 export function distinctSelectType(type) {
   return request({
     url: "/island/distinctSelect",

@@ -23,7 +23,7 @@ export default {
   width: 99.8%;
   height: 69.5%;
   /*border: 1px red solid;*/
-  margin-top: 22%;
+  margin-top: 20%;
   margin-left: 0.1%;
 }
 
