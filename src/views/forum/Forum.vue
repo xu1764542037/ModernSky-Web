@@ -136,7 +136,7 @@ export default {
       })
     },
     test() {
-      this.CurrentData
+      // this.CurrentData
 
     }
   },

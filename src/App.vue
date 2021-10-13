@@ -52,7 +52,8 @@ export default {
 }
 body{
   /*font-family: PingFang-SC-Regular,Helvetica,"Microsoft Yahei","微软雅黑";*/
-  font-family: PingFangSC-Regular!important;
+  /*font-family: PingFangSC-Regular!important;*/
+  font-family: Helvetica Neue, Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
   /*overflow: auto;*/
   -webkit-touch-callout: none;
   -webkit-user-select: none;

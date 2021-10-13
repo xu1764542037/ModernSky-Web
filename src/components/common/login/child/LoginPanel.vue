@@ -44,7 +44,7 @@ export default {
   methods: {
     Login() {
       if (this.checkCode != this.loginCode) {
-        alert("验证码错误，请重新输入")
+        this.$message.error('验证码错误，请重新输入！');
       } else {
         login(this.account,this.password).then(res => {
           // console.log(res);
@@ -67,10 +67,14 @@ export default {
                   })
                 }
               })
+              this.$message({
+                message: '登录成功！',
+                type: 'success'
+              });
               this.$router.push({path: "/index"})
             }
           }else {
-            alert("账号密码错误，请重新输入")
+            this.$message.error('账号密码错误，请重新输入！');
           }
         })
       }

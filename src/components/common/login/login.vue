@@ -81,13 +81,9 @@ export default {
     position: absolute;
   }
 
-
-
   #login-Option img {
     position: absolute;
     margin-left: 10px;
     margin-top: 2px;
   }
-
-
 </style>

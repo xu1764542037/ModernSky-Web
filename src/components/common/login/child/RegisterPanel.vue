@@ -35,9 +35,7 @@
         <span id="register-statement">《隐私权保护声明》</span>
       </span>
     </div>
-
   </div>
-
 </template>
 
 <script>

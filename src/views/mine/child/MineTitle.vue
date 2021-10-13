@@ -13,7 +13,7 @@
     <div class="MineTitle-data" style="margin-left: 37.2%;margin-top: 5%" @mouseover="newPageColor" @mouseleave="oldPageColor">
       <mine-title-data>
         <div id="MineTitle-data-page-data" slot="data">999</div>
-        <div id="MineTitle-data-page" slot="name">我的帖子</div>
+        <div id="MineTitle-data-page" slot="name">我的动态</div>
       </mine-title-data>
     </div>
     <img class="dividingLine" src="@/assets/img/mine/dividingLine.svg" height="80" width="80">
